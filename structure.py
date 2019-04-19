@@ -1,4 +1,4 @@
-from operator import itemgetter
+from operator import itemgetter as ig
 
 class RSSVector():
     distances = []
@@ -41,7 +41,8 @@ class Cell():
     def __init__(self, v_, loc):
         self.v = v_
         self.location = loc
-
+        self.Likeliness = .0 # Probability of Markov model
+        self.pastCount = 1
 
 def KNeighbors(fingerprints, sample):  
     '''
@@ -58,7 +59,7 @@ def KNeighbors(fingerprints, sample):
                     + abs(currentItem.v.n3 - sample.n3) \
                     + abs(currentItem.v.n4 - sample.n4) 
             distances.append((dist, currentItem))
-            distances = sorted(distances, key=itemgetter(0))
+            distances = sorted(distances, key=ig(0))
     neighbours = []
     for k in range (0,4):
         neighbours.append(distances[k][1])
@@ -72,9 +73,12 @@ def resolve_barycenter(neighbourCells, sample):
     Returns the weighted barycenter of the 4 neighbouring cells
     :param Cell[4] neighbourCells: Array containing the 4 closest cells
     :param RSSIVector sample: Sample of the mobile terminal
-    :return Location: Estimated location of the mobile terminal 
+    :return Location: Estimated location of the mobile terminal (return None if error)
     '''
     d = sample.distances #shorter notation
-    a1,a2,a3,a4 = 1 / (1+d[0]/d[1]+d[0]/d[2]+d[0]/d[3]), 1 / (1+d[1]/d[0]+d[1]/d[2]+d[1]/d[3]), 1 / (1+d[2]/d[1]+d[2]/d[0]+d[2]/d[3]), 1 / (1+d[3]/d[1]+d[3]/d[2]+d[3]/d[0])
-    return a1*neighbourCells[0].location + a2*neighbourCells[1].location + a3*neighbourCells[1].location + a4*neighbourCells[1].location
+    a1,a2,a3,a4 = 1 / (1+d[0]/d[1]+d[0]/d[2]+d[0]/d[3]),\
+                  1 / (1+d[1]/d[0]+d[1]/d[2]+d[1]/d[3]),\
+                  1 / (1+d[2]/d[1]+d[2]/d[0]+d[2]/d[3]),\
+                  1 / (1+d[3]/d[1]+d[3]/d[2]+d[3]/d[0])
+    return None if a1+a2+a3+a4 != 1.0 else a1*neighbourCells[0].location + a2*neighbourCells[1].location + a3*neighbourCells[2].location + a4*neighbourCells[3].location 
      
