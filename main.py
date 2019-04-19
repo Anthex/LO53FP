@@ -39,7 +39,7 @@ def main(args):
         print ("\ndistances : " + str(testSample.distances))
 
         #### Barycenter ####
-        a = resolve_barycenter(neighborsCells, testSample)
+        a = resolve_barycenter(neighborsCells, testSample.distances)
         print(a.toString())
 
         #### Markov ####

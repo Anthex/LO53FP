@@ -68,17 +68,16 @@ def KNeighbors(fingerprints, sample):
 
 
 
-def resolve_barycenter(neighbourCells, sample):
+def resolve_barycenter(nC, d):
     '''
     Returns the weighted barycenter of the 4 neighbouring cells
-    :param Cell[4] neighbourCells: Array containing the 4 closest cells
-    :param RSSIVector sample: Sample of the mobile terminal
+    :param Cell[4] nC: (neighborCells) Array containing the 4 closest cells
+    :param distance[4] d: distances of the sample of the mobile terminal
     :return Location: Estimated location of the mobile terminal (return None if error)
     '''
-    d = sample.distances #shorter notation
-    a1,a2,a3,a4 = 1 / (1+d[0]/d[1]+d[0]/d[2]+d[0]/d[3]),\
-                  1 / (1+d[1]/d[0]+d[1]/d[2]+d[1]/d[3]),\
-                  1 / (1+d[2]/d[1]+d[2]/d[0]+d[2]/d[3]),\
-                  1 / (1+d[3]/d[1]+d[3]/d[2]+d[3]/d[0])
-    return None if a1+a2+a3+a4 != 1.0 else a1*neighbourCells[0].location + a2*neighbourCells[1].location + a3*neighbourCells[2].location + a4*neighbourCells[3].location 
+    return None if len(nC) != 4  else  \
+          1 / (1+d[0]/d[1]+d[0]/d[2]+d[0]/d[3])*nC[0].location \
+        + 1 / (1+d[1]/d[0]+d[1]/d[2]+d[1]/d[3])*nC[1].location \
+        + 1 / (1+d[2]/d[1]+d[2]/d[0]+d[2]/d[3])*nC[2].location \
+        + 1 / (1+d[3]/d[1]+d[3]/d[2]+d[3]/d[0])*nC[3].location 
      
