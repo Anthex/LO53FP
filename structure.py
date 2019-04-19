@@ -44,6 +44,9 @@ class Cell():
         self.Likeliness = .0 # Probability of Markov model
         self.pastCount = 1
 
+def newCell(n1, n2, n3, n4, l1, l2):
+    return Cell(RSSVector(n1,n2,n3,n4), Location(l1,l2))
+    
 def KNeighbors(fingerprints, sample):  
     '''
     Returns the 4 closest cells to the given sample and fills sample distance data
@@ -52,15 +55,15 @@ def KNeighbors(fingerprints, sample):
     :return Cell[4]: the 4 nearest cells
     '''
     distances = []
+    neighbours = []
     for row in fingerprints:
         for currentItem in row:
             dist = abs(currentItem.v.n1 - sample.n1) \
-                    + abs(currentItem.v.n2 - sample.n2) \
-                    + abs(currentItem.v.n3 - sample.n3) \
-                    + abs(currentItem.v.n4 - sample.n4) 
+                 + abs(currentItem.v.n2 - sample.n2) \
+                 + abs(currentItem.v.n3 - sample.n3) \
+                 + abs(currentItem.v.n4 - sample.n4) 
             distances.append((dist, currentItem))
-            distances = sorted(distances, key=ig(0))
-    neighbours = []
+    distances = sorted(distances, key=ig(0))
     for k in range (0,4):
         neighbours.append(distances[k][1])
         sample.distances.append(distances[k][0])
