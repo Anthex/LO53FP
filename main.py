@@ -39,7 +39,7 @@ def main(args):
 
         #### Markov ####
         MM = MarkovModel(Tf)    
-        MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9])
+        MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9,5,4,3,2,3,2,4,5,4,5,6,6,7,6,9,5,9,3])
         
         MM.printValues()
         print("\r\nPERCENTAGES : \r\n")

@@ -81,20 +81,21 @@ class MarkovModel():
             self.MarkovValues.append([])
             for k in range (0, 10):
                 self.MarkovValues[i].append(MarkovValue())
-                    
+        self.MarkovValues[10][0].nb = 1 #initial position sigma increment  
+              
     def moveToCellID(self, nextCell):
-        self.MarkovValues[self.previousCell][nextCell].nb += 1     
+        self.MarkovValues[nextCell][self.previousCell].nb += 1     
         self.MarkovValues[10][nextCell].nb += 1
-        self.previousCell = nextCell
         self.refreshPercentage(self.previousCell)
-
+        self.previousCell = nextCell
+        
     def moveToCell(self, nextCell):
         self.moveToCellID(nextCell.location.getPositionInArray()+1)
 
     def refreshPercentage(self, col):
-        for k in range(0,10):
-            if  self.MarkovValues[10][k].nb != 0:
-                self.MarkovValues[k][col].percentage = self.MarkovValues[k][col].nb / self.MarkovValues[10][col].nb
+        if  self.MarkovValues[10][col].nb:
+            for k in range(0,10):
+                    self.MarkovValues[k][col].percentage = self.MarkovValues[k][col].nb / self.MarkovValues[10][col].nb
             
     def printValues(self):
         print("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
@@ -114,7 +115,7 @@ class MarkovModel():
         print("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
         print("---------------------------------------------------------------------------------", end='')
         
-        for i in range (0, 10):
+        for i in range (1, 10):
             print("\r\n", end='')
             
             print(i, end='\t')
