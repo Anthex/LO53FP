@@ -58,6 +58,9 @@ def main(args):
         while(1):
                 print("Input next location ID (between 1 and 9)\r\n>>", end='')
                 in_char = int(input())
+                print(chr(27)+'[2j')
+                print('\033c')
+                print('\x1bc')
                 if in_char > 0 and in_char < 10:
                         MM.moveToCellID(in_char)
                         MM.printValues()
