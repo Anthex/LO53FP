@@ -1,5 +1,4 @@
-
-from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter
+from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel, MarkovValue
 import sys 
 
 Tf = [] #cells table
@@ -13,7 +12,7 @@ for i in range (0, 3):
     for k in range (0,3):
         Tf[i].append([])
 
-#known fingerprints 
+#known fingerprints
 Tf[0][0] = newCell(-38,-27,-54,-13,2,2)
 Tf[0][1] = newCell(-74,-62,-48,-33,2,6)
 Tf[0][2] = newCell(-13,-28,-12,-40,2,10)
@@ -39,6 +38,35 @@ def main(args):
         print(a.toString())
 
         #### Markov ####
+        MM = MarkovModel(Tf)
+        """
+        for a in range(0,3):
+                for b in range(0,3):
+                        d = Location(Tf[a][b].location.x, Tf[a][b].location.y)
+                        print(d.toString())
+                        print(d.getPositionInArray())
+        """
+        MM.moveToCellID(8)
+        MM.moveToCellID(7)
+        MM.moveToCellID(8)
+        MM.moveToCellID(7)
+        MM.moveToCellID(8)
+        MM.moveToCellID(7)
+        MM.moveToCellID(8)
+        MM.moveToCellID(5)
+        MM.moveToCellID(8)
+        MM.moveToCellID(2)
+        MM.moveToCellID(9)
+        MM.moveToCellID(8)
+        MM.moveToCellID(1)
+        MM.moveToCell(Tf[2][2])
+        MM.moveToCellID(8)
+        MM.moveToCell(Tf[2][2])
+        
+        MM.printValues()
+        print("")
+        MM.printPercentages()
 
-        return 0
+        print("\r\ncurrent cell is #" + str(MM.previousCell) + " , most likely next cell is #" + str(MM.getMostLikely()) + " which is located at " + str(Location.fromID(MM.getMostLikely()).toString()))
+        
 main(sys.argv)
