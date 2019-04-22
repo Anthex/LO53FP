@@ -38,11 +38,11 @@ def main(args):
         print(a.toString())
 
         #### Markov ####
-        MM = MarkovModel(Tf)
+        MM = MarkovModel(Tf)    
         MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9])
         
         MM.printValues()
-        print("")
+        print("\r\nPERCENTAGES : \r\n")
         MM.printPercentages()
 
         print("\r\ncurrent cell is #" + str(MM.previousCell) + " , most likely next cell is #" + str(MM.getMostLikely()) + " which is located at " + str(Location.fromID(MM.getMostLikely()).toString()))

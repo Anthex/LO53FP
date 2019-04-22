@@ -68,10 +68,9 @@ class Cell():
         self.location = loc
 
 class MarkovValue():
-    def __init__(self, nb=0, percentage=0):
+    def __init__(self, nb=0, percentage=0.0):
         self.nb = nb
         self.percentage = percentage # Probability of Markov model (100% <=> 1.0)
-        self.attachedCell = None
 
 class MarkovModel():
     def __init__(self,cells):
@@ -86,12 +85,17 @@ class MarkovModel():
     def moveToCellID(self, nextCell):
         self.MarkovValues[self.previousCell][nextCell].nb += 1     
         self.MarkovValues[10][nextCell].nb += 1
-        self.MarkovValues[self.previousCell][nextCell].percentage = self.MarkovValues[self.previousCell][nextCell].nb /self.MarkovValues[10][nextCell].nb
         self.previousCell = nextCell
+        self.refreshPercentage(self.previousCell)
 
     def moveToCell(self, nextCell):
         self.moveToCellID(nextCell.location.getPositionInArray()+1)
 
+    def refreshPercentage(self, col):
+        for k in range(0,10):
+            if  self.MarkovValues[10][k].nb != 0:
+                self.MarkovValues[k][col].percentage = self.MarkovValues[k][col].nb / self.MarkovValues[10][col].nb
+            
     def printValues(self):
         print("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
         print("---------------------------------------------------------------------------------", end='')
@@ -110,14 +114,12 @@ class MarkovModel():
         print("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
         print("---------------------------------------------------------------------------------", end='')
         
-        for i in range (0, 11):
+        for i in range (0, 10):
             print("\r\n", end='')
-            if i == 1:
-                print("---------------------------------------------------------------------------------\r\n",end='')
             
             print(i, end='\t')
             for k in range (0,10):
-                print(round(self.MarkovValues[i][k].percentage,2), end='\t')
+                print(str(floor(self.MarkovValues[i][k].percentage * 100)), end='\t')
         print("")
 
     def getMostLikely(self):
@@ -135,7 +137,6 @@ class MarkovModel():
     def path(self, locationIDs):
         for loc in locationIDs:
             self.moveToCellID(loc)
-            
     def toString(self):
         return ""
 
