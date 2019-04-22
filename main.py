@@ -53,7 +53,7 @@ def main(args):
         print("\r\nPERCENTAGES : \r\n")
         MM.printPercentages()
 
-        print("\r\ncurrent cell is \033[0;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
+        print("\r\ncurrent cell is \033[1;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
         
         while(1):
                 print("Input next location ID (between 1 and 9)\r\n>>", end='')
