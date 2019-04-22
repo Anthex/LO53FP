@@ -32,6 +32,8 @@ def main(args):
         #### Distances ####
         print ("\ndistances : " + str(testSample.distances))
 
+        KNeighbors(dz,)
+
         #### Barycenter ####
         a = resolve_barycenter(neighborsCells, testSample.distances)
         print(a.toString())
@@ -40,6 +42,7 @@ def main(args):
         MM = MarkovModel(Tf)    
         MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9,5,4,3,2,3,2,4,5,4,5,6,6,7,6,9,5,9,3,2,4,3,5,3,4,3,3,5,6,7,6,7,6,5,4,3,4,3,4])
         
+        print("\r\n")
         MM.printValues()
         print("\r\nPERCENTAGES : \r\n")
         MM.printPercentages()
