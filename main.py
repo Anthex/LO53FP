@@ -32,8 +32,6 @@ def main(args):
         #### Distances ####
         print ("\ndistances : " + str(testSample.distances))
 
-        KNeighbors(dz,)
-
         #### Barycenter ####
         a = resolve_barycenter(neighborsCells, testSample.distances)
         print(a.toString())
