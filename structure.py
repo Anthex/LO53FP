@@ -10,12 +10,10 @@ class RSSVector():
         self.n4 = n4
 
 class Location():
-    
     def __init__(self, x, y, z=0):
         self.x = x
         self.y = y
         self.z = z
-
 
     def __mul__(self, multiplier):
         returnValue = Location(self.x, self.y, self.z)
@@ -84,8 +82,7 @@ class MarkovModel():
             self.MarkovValues.append([])
             for k in range (0, 10):
                 self.MarkovValues[i].append(MarkovValue())
-        
-                
+                    
     def moveToCellID(self, nextCell):
         self.MarkovValues[self.previousCell][nextCell].nb += 1     
         self.MarkovValues[10][nextCell].nb += 1
@@ -135,6 +132,10 @@ class MarkovModel():
                 max_id = k
         return max_id 
 
+    def path(self, locationIDs):
+        for loc in locationIDs:
+            self.moveToCellID(loc)
+            
     def toString(self):
         return ""
 
