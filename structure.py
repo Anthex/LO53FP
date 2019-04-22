@@ -153,7 +153,7 @@ class MarkovModel():
                 if not self.MarkovValues[i][k].nb:
                     print("\033[0;31;40m", end='')
                 else:
-                    print("\033[1;36;40m", end='')
+                    print("\033[0;32;40m", end='')
                 print(self.MarkovValues[i][k].nb, end='\t')
                 print("\033[1;37;40m", end='')
         print("")
@@ -170,10 +170,12 @@ class MarkovModel():
             for k in range (0,10):
                 if not self.MarkovValues[i][k].percentage:
                     print("\033[0;31;40m", end='')
+                elif k != self.previousCell or self.getMostLikely() != i:
+                    print("\033[0;32;40m", end='')
                 else:
-                    print("\033[1;36;40m", end='')
-                print(str(floor(self.MarkovValues[i][k].percentage * 100)), end='%\t')
-                print("\033[1;37;40m", end='')
+                    print("\033[4;30;46m", end='')
+                print(str(floor(self.MarkovValues[i][k].percentage * 100)), end='%')
+                print("\033[1;37;40m\t", end='')
         print("")
 
     def getMostLikely(self):

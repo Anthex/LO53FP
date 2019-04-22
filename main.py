@@ -1,5 +1,7 @@
 from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel, MarkovValue
 import sys 
+from random import random
+from math import floor
 
 Tf = [] #cells table
 
@@ -38,12 +40,30 @@ def main(args):
 
         #### Markov ####
         MM = MarkovModel(Tf)    
+
+        # small set fixed definition
         MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9,5,4,3,2,3,2,4,5,4,5,6,6,7,6,9,5,9,3,2,4,3,5,3,4,3,3,5,6,7,6,7,6,5,4,3,4,3,4])
+
+        # larger set random generation
+        for k in range(0,100):
+                MM.moveToCellID(floor(random()*9+1))
+
         print("\r\n")
         MM.printValues()
         print("\r\nPERCENTAGES : \r\n")
         MM.printPercentages()
 
-        print("\r\ncurrent cell is #" + str(MM.previousCell) + " , most likely next cell is #" + str(MM.getMostLikely()) + " which is located at " + str(Location.fromID(MM.getMostLikely()).toString()))
+        print("\r\ncurrent cell is \033[0;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
         
+        while(1):
+                print("Input next location ID (between 1 and 9)\r\n>>", end='')
+                in_char = int(input())
+                if in_char > 0 and in_char < 10:
+                        MM.moveToCellID(in_char)
+                        MM.printValues()
+                        print("\r\nPERCENTAGES : \r\n")
+                        MM.printPercentages()
+                        print("\r\ncurrent cell is \033[0;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
+        else:
+                        print("invalid ID")
 main(sys.argv)
