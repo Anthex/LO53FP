@@ -3,8 +3,7 @@ import sys
 
 Tf = [] #cells table
 
-testSamples = [RSSVector(-26, -42, -13, -46), RSSVector(-26, -42, -13, -46), RSSVector(-26, -42, -13, -46)]
-testSample = testSamples[0]
+testSample = RSSVector(-26, -42, -13, -46)
 
 #cells Table initialization
 for i in range (0, 3):
@@ -39,7 +38,7 @@ def main(args):
 
         #### Markov ####
         MM = MarkovModel(Tf)    
-        MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9,5,4,3,2,3,2,4,5,4,5,6,6,7,6,9,5,9,3])
+        MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9,5,4,3,2,3,2,4,5,4,5,6,6,7,6,9,5,9,3,2,4,3,5,3,4,3,3,5,6,7,6,7,6,5,4,3,4,3,4])
         
         MM.printValues()
         print("\r\nPERCENTAGES : \r\n")

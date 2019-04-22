@@ -120,7 +120,12 @@ class MarkovModel():
             
             print(i, end='\t')
             for k in range (0,10):
-                print(str(floor(self.MarkovValues[i][k].percentage * 100)), end='\t')
+                if not self.MarkovValues[i][k].percentage:
+                    print("\033[0;31;40m", end='')
+                else:
+                    print("\033[1;36;40m", end='')
+                print(str(floor(self.MarkovValues[i][k].percentage * 100)), end='%\t')
+                print("\033[1;37;40m", end='')
         print("")
 
     def getMostLikely(self):
