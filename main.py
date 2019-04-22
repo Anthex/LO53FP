@@ -9,7 +9,7 @@ testSample = testSamples[0]
 #cells Table initialization
 for i in range (0, 3):
     Tf.append([])
-    for k in range (0,3):
+    for _ in range (0,3):
         Tf[i].append([])
 
 #known fingerprints

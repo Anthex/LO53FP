@@ -79,10 +79,10 @@ class MarkovModel():
         self.previousCell = 0
         for i in range (0, 11):
             self.MarkovValues.append([])
-            for k in range (0, 10):
+            for _ in range (0, 10):
                 self.MarkovValues[i].append(MarkovValue())
         self.MarkovValues[10][0].nb = 1 #initial position sigma increment  
-              
+
     def moveToCellID(self, nextCell):
         self.MarkovValues[nextCell][self.previousCell].nb += 1     
         self.MarkovValues[10][nextCell].nb += 1
@@ -114,7 +114,7 @@ class MarkovModel():
     def printPercentages(self):
         print("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
         print("---------------------------------------------------------------------------------", end='')
-        
+    
         for i in range (1, 10):
             print("\r\n", end='')
             
@@ -138,8 +138,7 @@ class MarkovModel():
     def path(self, locationIDs):
         for loc in locationIDs:
             self.moveToCellID(loc)
-    def toString(self):
-        return ""
+    
 
 def newCell(n1, n2, n3, n4, l1, l2):
     return Cell(RSSVector(n1,n2,n3,n4), Location(l1,l2))
