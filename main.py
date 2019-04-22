@@ -39,13 +39,6 @@ def main(args):
 
         #### Markov ####
         MM = MarkovModel(Tf)
-        """
-        for a in range(0,3):
-                for b in range(0,3):
-                        d = Location(Tf[a][b].location.x, Tf[a][b].location.y)
-                        print(d.toString())
-                        print(d.getPositionInArray())
-        """
         MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9])
         
         MM.printValues()
