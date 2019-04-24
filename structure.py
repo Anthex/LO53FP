@@ -21,6 +21,12 @@ class Location():
         self.y = y
         self.z = z
 
+    def __eq__(self, loc2):
+        if self.x == loc2.x and self.y == loc2.y and self.z == loc2.z:
+            return True
+        else:
+            return False
+
     def __mul__(self, multiplier):
         returnValue = Location(self.x, self.y, self.z)
         returnValue.x *= multiplier 
