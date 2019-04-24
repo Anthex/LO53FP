@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Anthex/LO53FP.svg?branch=master)](https://travis-ci.com/Anthex/LO53FP)
+
 [UTBM - LO53] - Python fingerprinting
 Achille Dantz <achille@dantz.fr>
 
