@@ -1,5 +1,4 @@
 from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel, MarkovValue
-import sys 
 from random import random
 from math import floor
 
@@ -24,7 +23,7 @@ Tf[2][0] = newCell(-17,-50,-44,-33,10,2)
 Tf[2][1] = newCell(-27,-28,-32,-45,10,6)
 Tf[2][2] = newCell(-30,-20,-60,-40,10,10)
 
-def main(args):
+def main():
         #### K neighbours ####
         print("\nk neighbors of test sample : ")
         neighborsCells = KNeighbors(Tf, testSample)
@@ -69,4 +68,6 @@ def main(args):
                         print("\r\ncurrent cell is \033[0;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
         else:
                         print("invalid ID")
-main(sys.argv)
+
+if __name__ == '__main__':
+        main()
