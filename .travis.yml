@@ -1,8 +1,4 @@
 language: python
-before_install:
-  - pip install codecov
-after_success:
-  - codecov -t 61108870-98fd-405e-9300-9cda8b8e13fa
 python:
   - "3.5"
   - "3.6"
