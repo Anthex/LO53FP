@@ -40,3 +40,39 @@ def test_MarkovModel():
     assert test_MM.previousCell == 3
     test_MM.moveToCell(Tf[0][1])
     assert test_MM.previousCell  == 2
+
+def test_newCell():
+      testCell = newCell(-38,-27,-54,-13,2,2)
+      assert testCell.location == Location(2,2)
+      assert testCell.v == RSSVector(-38,-27,-54,-13)
+
+def test_Path():
+      test_MM = MarkovModel(Tf)
+      assert test_MM.previousCell == 0
+      test_MM.path([1,2,3,4])
+      assert test_MM.previousCell == 4
+      test_MM.path([8,4,4])
+      assert test_MM.previousCell == 4
+
+def test_getPositionInArray():
+      test_loc = Location(2,2)
+      assert test_loc.getPositionInArray() == 0
+      test_loc = Location(2,6)
+      assert test_loc.getPositionInArray() == 1
+      test_loc = Location(10,10)
+      assert test_loc.getPositionInArray() == 8
+      
+def test_fromID():
+      test_loc = Location.fromID(3)
+      assert test_loc == Location(2,10)      
+      test_loc = Location.fromID(9)
+      assert test_loc == Location(10,10)      
+
+def test_getModeLikely():
+      test_MM = MarkovModel(Tf)
+      test_MM.path([1,2,3,4,3,4,3,5,4,5,6,4,3])
+      assert test_MM.getMostLikely() == 4
+      test_MM.path([5,6,7,6,7,6,7,5,6])
+      assert test_MM.getMostLikely() == 7
+      test_MM.path([4,4,4,4,4,4,4])
+      assert test_MM.getMostLikely() == 4

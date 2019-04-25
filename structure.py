@@ -14,7 +14,11 @@ class RSSVector():
         self.n2 = n2
         self.n3 = n3
         self.n4 = n4
-
+    
+    def __eq__(self, v2):
+        return True if v2.n1 == self.n1 and  v2.n2 == self.n2 \
+        and  v2.n3 == self.n3 and  v2.n4 == self.n4 else False
+        
 class Location():
     def __init__(self, x, y, z=0):
         self.x = x
