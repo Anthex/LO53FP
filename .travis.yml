@@ -1,4 +1,6 @@
 language: python
+install:
+  - pip install codecov
 python:
   - "3.5"
   - "3.6"
@@ -7,4 +9,6 @@ matrix:
     - name: "Python 3.7.1 on Xenial Linux"
       python: 3.7           
       dist: xenial
-script: py.test
+script: py.test --cov-report=xml --cov=./
+after_success:
+  - codecov
