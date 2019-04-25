@@ -115,7 +115,3 @@ class OutputBuffer(object):
     @property
     def out(self):
         return self.stdout.getvalue()
-
-    @property
-    def err(self):
-        return self.stderr.getvalue()
