@@ -239,7 +239,7 @@ def KNeighbors(fingerprints, sample):
     :param sample: Mobile terminal sample
     :return: the 4 nearest cells
     '''
-    distances, neighbours = [], []
+    distances = []
     for row in fingerprints:
         for currentItem in row:
             dist = abs(currentItem.v.n1 - sample.n1) \
@@ -248,10 +248,8 @@ def KNeighbors(fingerprints, sample):
                  + abs(currentItem.v.n4 - sample.n4) 
             distances.append((dist, currentItem))
     distances = sorted(distances, key=ig(0))
-    for k in range (0,4):
-        neighbours.append(distances[k][1])
-        sample.distances.append(distances[k][0])
-    return neighbours
+    sample.distances = [x[0] for x in distances][:4]
+    return [x[1] for x in distances][:4]
 
 
 

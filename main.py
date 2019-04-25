@@ -1,4 +1,4 @@
-from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel, MarkovValue
+from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel
 from random import random
 from math import floor
 
