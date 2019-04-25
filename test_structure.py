@@ -1,4 +1,6 @@
 from structure import *
+from io import StringIO
+import sys
 
 Tf = [[newCell(-38,-27,-54,-13,2,2),newCell(-74,-62,-48,-33,2,6),newCell(-13,-28,-12,-40,2,10) ],\
       [newCell(-34,-27,-38,-41,6,2), newCell(-64,-48,-72,-35,6,6), newCell(-45,-37,-20,-15,6,10)], \
@@ -76,3 +78,44 @@ def test_getModeLikely():
       assert test_MM.getMostLikely() == 7
       test_MM.path([4,4,4,4,4,4,4])
       assert test_MM.getMostLikely() == 4
+
+def test_printValues():
+      test_MM = MarkovModel(Tf)
+      test_MM.path([1,2,3,2,3,4,3,4])
+      
+      with OutputBuffer() as output:
+            test_MM.printValues()
+      assert len(output.out) > 2500
+      print(len(output.out))
+
+def test_printPercentage():
+      test_MM = MarkovModel(Tf)
+      test_MM.path([1,2,3,2,3,4,3,4])
+
+      with OutputBuffer() as output:
+            test_MM.printPercentages()
+      assert len(output.out) > 2000
+      print(len(output.out))
+
+
+class OutputBuffer(object):
+
+    def __init__(self):
+        self.stdout = StringIO()
+        self.stderr = StringIO()
+
+    def __enter__(self):
+        self.original_stdout, self.original_stderr = sys.stdout, sys.stderr
+        sys.stdout, sys.stderr = self.stdout, self.stderr
+        return self
+
+    def __exit__(self, exception_type, exception, traceback):
+        sys.stdout, sys.stderr = self.original_stdout, self.original_stderr
+
+    @property
+    def out(self):
+        return self.stdout.getvalue()
+
+    @property
+    def err(self):
+        return self.stderr.getvalue()
