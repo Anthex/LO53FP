@@ -1,6 +1,7 @@
 language: python
 install:
   - pip install codecov
+  - pip install pytest-cov
 python:
   - "3.5"
   - "3.6"
