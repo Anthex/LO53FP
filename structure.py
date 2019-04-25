@@ -26,10 +26,8 @@ class Location():
         self.z = z
 
     def __eq__(self, loc2):
-        if self.x == loc2.x and self.y == loc2.y and self.z == loc2.z:
-            return True
-        else:
-            return False
+        return bool(self.x == loc2.x and self.y == loc2.y and self.z == loc2.z)
+        
 
     def __mul__(self, multiplier):
         returnValue = Location(self.x, self.y, self.z)
@@ -72,15 +70,15 @@ class Location():
         return floor((temp.x * arraySize + temp.y)/2)
 
     @staticmethod
-    def fromID(id, arraySize=3):
+    def fromID(origin_id, arraySize=3):
         '''
         Returns the Location of a fingerprint of known ID
         :param: ID to resolve
         :param arraySize: (Optional) dimension of the array
         '''
-        id -= 1
-        y=id % 3
-        x=floor((id - y) / 3)
+        origin_id -= 1
+        y=origin_id % 3
+        x=floor((origin_id - y) / 3)
         returnValue = Location(x, y)
         returnValue *= 2
         returnValue += Location(1,1)
@@ -204,11 +202,11 @@ class MarkovModel():
         :param currentCell: ID of the last cell 
         :return: ID of the most likely next location
         '''
-        max=0
+        max_value=0
         max_id=0
         for k in range(1,10):
-            if self.MarkovValues[k][currentCell].nb > max:
-                max = self.MarkovValues[k][currentCell].nb
+            if self.MarkovValues[k][currentCell].nb > max_value:
+                max_value = self.MarkovValues[k][currentCell].nb
                 max_id = k
         return max_id 
 

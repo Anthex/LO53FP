@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.com/Anthex/LO53FP.svg?branch=master)](https://travis-ci.com/Anthex/LO53FP)   [![codecov](https://codecov.io/gh/Anthex/LO53FP/branch/master/graph/badge.svg)](https://codecov.io/gh/Anthex/LO53FP) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.com/Anthex/LO53FP.svg?branch=master)](https://travis-ci.com/Anthex/LO53FP)   [![codecov](https://codecov.io/gh/Anthex/LO53FP/branch/master/graph/badge.svg)](https://codecov.io/gh/Anthex/LO53FP) [![CodeFactor](https://www.codefactor.io/repository/github/anthex/lo53fp/badge)](https://www.codefactor.io/repository/github/anthex/lo53fp) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
   
 

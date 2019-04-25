@@ -54,8 +54,9 @@ def main():
                         print("\r\nPERCENTAGES : \r\n")
                         MM.printPercentages()
                         print("\r\ncurrent cell is \033[0;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
-        else:
+                else:
                         print("invalid ID")
+                        break
 
 if __name__ == '__main__':
         main()
