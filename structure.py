@@ -297,5 +297,6 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
                 if d < minDist:
                     minDist = d
                     minLoc = Location(round(k,2),round(l,2),round(m,2))
-                imageArray[floor(l*10)].append(d*10+255-min(10+exp(d*2),255))
+                d = (max(1-d/10.0, 0))**2
+                imageArray[floor(l*10)].append((250-floor(360-d*360), 255, floor(50+d*200)))
     return (minLoc, minDist, imageArray[0], floor(ySize/step), floor(xSize/step), imageArray)
