@@ -17,4 +17,8 @@ visuals.py provides a cool function to graphically represent the N-Lateration di
 ### Example
 [Click here to view output gif example](https://dantz.fr/LO53/out_rgb.gif?) (too big to be displayed)
 
+<<<<<<< HEAD
 [Or here for the shades of grey version](https://dantz.fr/LO53/out.gif?)
+=======
+[Or here for the shades of grey version](https://dantz.fr/LO53/out.gif?) (too big to be displayed)
+>>>>>>> refs/remotes/origin/master
