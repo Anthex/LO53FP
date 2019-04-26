@@ -2,7 +2,6 @@ from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_ba
 from random import random
 from math import floor, sqrt, ceil
 from PIL import Image, ImageDraw
-from os import startfile
 
 dataset = [(Location(.5,.5,.5), 3.0), (Location(4.0,.0,.0), 2.0), (Location(4.0,5.0,5.0), 4.2), (Location(3.0,3.0,3.0), 2.5)]
 NLat_result = NLateration(dataset)
