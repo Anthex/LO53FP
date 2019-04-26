@@ -1,5 +1,5 @@
 from operator import itemgetter as ig
-from math import floor, sqrt, ceil, log, exp
+from math import floor, sqrt, ceil, exp
 from numpy import arange
 class RSSVector():
     distances = []
@@ -30,7 +30,7 @@ class Location():
         
     def __mul__(self, multiplier):
         returnValue = Location(self.x, self.y, self.z)
-        returnValue.x *= multiplier 
+        returnValue.x *= multiplier
         returnValue.y *= multiplier
         returnValue.z *= multiplier
         return returnValue
@@ -117,14 +117,14 @@ class MarkovModel():
             self.MarkovValues.append([])
             for _ in range (0, 10):
                 self.MarkovValues[i].append(MarkovValue())
-        self.MarkovValues[10][0].nb = 1 #initial position sigma increment  
+        self.MarkovValues[10][0].nb = 1 #initial position sigma increment
 
     def moveToCellID(self, nextCell):
         '''
         Registers a movement from the current cell to a specified location by its ID
         :param nextCell: The ID of the new location
         '''
-        self.MarkovValues[nextCell][self.previousCell].nb += 1     
+        self.MarkovValues[nextCell][self.previousCell].nb += 1
         self.MarkovValues[10][nextCell].nb += 1
         self.refreshPercentage(self.previousCell)
         self.previousCell = nextCell
@@ -201,7 +201,7 @@ class MarkovModel():
         Returns the ID of the most likely next location with a given previous cell ID
         Typically called by getMostLikely() function
         Convert to coordinates using the Location.fromID() function
-        :param currentCell: ID of the last cell 
+        :param currentCell: ID of the last cell
         :return: ID of the most likely next location
         '''
         max_value=0
@@ -210,7 +210,7 @@ class MarkovModel():
             if self.MarkovValues[k][currentCell].nb > max_value:
                 max_value = self.MarkovValues[k][currentCell].nb
                 max_id = k
-        return max_id 
+        return max_id
 
     def path(self, locationIDs):
         '''
@@ -233,8 +233,8 @@ def newCell(n1, n2, n3, n4, l1, l2):
     :return: Cell with given characteristics
     '''
     return Cell(RSSVector(n1,n2,n3,n4), Location(l1,l2))
-    
-def KNeighbors(fingerprints, sample):  
+
+def KNeighbors(fingerprints, sample):
     '''
     Returns the 4 closest cells to the given sample and fills sample distance data
     :param fingerprints: 2D array of all the cells
@@ -247,7 +247,7 @@ def KNeighbors(fingerprints, sample):
             dist = abs(currentItem.v.n1 - sample.n1) \
                  + abs(currentItem.v.n2 - sample.n2) \
                  + abs(currentItem.v.n3 - sample.n3) \
-                 + abs(currentItem.v.n4 - sample.n4) 
+                 + abs(currentItem.v.n4 - sample.n4)
             distances.append((dist, currentItem))
     distances = sorted(distances, key=ig(0))
     sample.distances = [x[0] for x in distances][:4]
@@ -266,7 +266,7 @@ def resolve_barycenter(nC, d):
           1 / (1+d[0]/d[1]+d[0]/d[2]+d[0]/d[3])*nC[0].location \
         + 1 / (1+d[1]/d[0]+d[1]/d[2]+d[1]/d[3])*nC[1].location \
         + 1 / (1+d[2]/d[1]+d[2]/d[0]+d[2]/d[3])*nC[2].location \
-        + 1 / (1+d[3]/d[1]+d[3]/d[2]+d[3]/d[0])*nC[3].location 
+        + 1 / (1+d[3]/d[1]+d[3]/d[2]+d[3]/d[0])*nC[3].location
 
 
 def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):

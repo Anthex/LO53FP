@@ -1,6 +1,5 @@
-from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel, NLateration
-from random import random
-from math import floor, sqrt, ceil
+from structure import NLateration, Location
+from math import floor, sqrt
 from PIL import Image, ImageDraw
 
 dataset = [(Location(.5,.5,.5), 3.0), (Location(4.0,.0,.0), 2.0), (Location(4.0,5.0,5.0), 4.2), (Location(3.0,3.0,3.0), 2.5)]

@@ -4,7 +4,7 @@ from PIL import Image
 
 def test_createFrame():
     result = createFrame(100,100,1)
-    assert type(result) is Image.Image
+    assert isinstance(result, Image.Image)
 
 def test_exportGif():
     exportGif()

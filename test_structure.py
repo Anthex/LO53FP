@@ -68,9 +68,9 @@ def test_getPositionInArray():
       
 def test_fromID():
       test_loc = Location.fromID(3)
-      assert test_loc == Location(2,10)      
+      assert test_loc == Location(2,10)
       test_loc = Location.fromID(9)
-      assert test_loc == Location(10,10)      
+      assert test_loc == Location(10,10)
 
 def test_getModeLikely():
       test_MM = MarkovModel(Tf)
@@ -84,7 +84,7 @@ def test_getModeLikely():
 def test_printValues():
       test_MM = MarkovModel(Tf)
       test_MM.path([1,2,3,2,3,4,3,4])
-      
+
       with OutputBuffer() as output:
             test_MM.printValues()
       assert len(output.out) > 2500

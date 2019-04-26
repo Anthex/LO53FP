@@ -1,4 +1,4 @@
-from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel, NLateration
+from structure import RSSVector, Location, newCell, KNeighbors, resolve_barycenter, MarkovModel, NLateration
 from random import random
 from math import floor
 
@@ -35,7 +35,7 @@ def main():
         print(a.toString())
 
         #### Markov ####
-        MM = MarkovModel(Tf)    
+        MM = MarkovModel(Tf)
 
         # small set fixed definition
         MM.path([8,7,8,7,8,7,8,5,8,2,9,8,1,9,8,9,5,4,3,2,3,2,4,5,4,5,6,6,7,6,9,5,9,3,2,4,3,5,3,4,3,3,5,6,7,6,7,6,5,4,3,4,3,4])
@@ -50,7 +50,7 @@ def main():
         MM.printPercentages()
 
         print("\r\ncurrent cell is \033[1;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
-        
+
         while(1):
                 print("Input next location ID (between 1 and 9)\r\n>>", end='')
                 in_char = int(input())
