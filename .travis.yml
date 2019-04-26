@@ -2,6 +2,7 @@ language: python
 install:
   - pip install codecov
   - pip install pytest-cov
+  - pip install Pillow
 python:
   - "3.5"
   - "3.6"
