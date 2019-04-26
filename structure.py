@@ -1,5 +1,5 @@
 from operator import itemgetter as ig
-from math import floor, sqrt
+from math import floor, sqrt, ceil, log, exp
 from numpy import arange
 class RSSVector():
     distances = []
@@ -277,22 +277,25 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
     :param xSize: The X dimension of the cuboid containing all the emitters (automatically computed if not specified)
     :param ySize: The Y dimension of the cuboid containing all the emitters (automatically computed if not specified)
     :param zSize: The Z dimension of the cuboid containing all the emitters (automatically computed if not specified)
+    :return: args 4 and 5 are the x/y dimensions of the cuboid, imageArray contains and image of the distances for graphic representation
     '''
     minLoc = Location()
     minDist = 0.0
+    #gifArray = []
     for k in data:
         minDist += abs(k[0].distanceTo(Location()) - k[1])
         xSize = k[0].x if k[0].x > xSize  else xSize
         ySize = k[0].y if k[0].y > ySize  else ySize
         zSize = k[0].z if k[0].z > zSize  else zSize
-    for k in arange(0.1,xSize,step):
-        for l in arange(0.1,ySize,step):
-            for m in arange(0.1,zSize,step):
+    imageArray=[[] for i in range(0,floor(zSize*10))]
+    for k in arange(0,xSize,step):
+        for l in arange(0,ySize,step):
+            for m in arange(0,zSize,step):
                 d = .0
                 for n in data:
                     d += abs(n[0].distanceTo(Location(k,l,m)) - n[1])
                 if d < minDist:
                     minDist = d
                     minLoc = Location(round(k,2),round(l,2),round(m,2))
-    return (minLoc, minDist)
-    
+                imageArray[floor(l*10)].append(d*10+255-min(10+exp(d*2),255))
+    return (minLoc, minDist, imageArray[0], floor(ySize/step), floor(xSize/step), imageArray)
