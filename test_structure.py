@@ -1,6 +1,8 @@
-from structure import KNeighbors, resolve_barycenter, Location, newCell, MarkovModel, RSSVector
+from structure import KNeighbors, resolve_barycenter, Location, newCell, MarkovModel, RSSVector, NLateration
 from io import StringIO
 import sys
+
+testEmitters = [(Location(.5,.5,.5), 3.0), (Location(4.0,.0,.0), 2.0), (Location(4.0,5.0,5.0), 4.2), (Location(3.0,3.0,3.0), 2.5)]
 
 Tf = [[newCell(-38,-27,-54,-13,2,2),newCell(-74,-62,-48,-33,2,6),newCell(-13,-28,-12,-40,2,10) ],\
       [newCell(-34,-27,-38,-41,6,2), newCell(-64,-48,-72,-35,6,6), newCell(-45,-37,-20,-15,6,10)], \
@@ -97,7 +99,10 @@ def test_printPercentage():
       assert len(output.out) > 2000
       print(len(output.out))
 
-
+def test_NLateration():
+      test_result = NLateration(testEmitters)
+      assert test_result[0] == Location(3.3, 1.5, 1.1)
+      assert round(test_result[1],2) == 1.19
 class OutputBuffer(object):
 
     def __init__(self):

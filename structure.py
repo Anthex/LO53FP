@@ -279,12 +279,12 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
     :param zSize: The Z dimension of the cuboid containing all the emitters (automatically computed if not specified)
     '''
     minLoc = Location()
-    minDist = xMax = yMax = zMax = 0.0
+    minDist = 0.0
     for k in data:
         minDist += abs(k[0].distanceTo(Location()) - k[1])
-        xMax = k[0].x if k[0].x > xMax and not xSize else k[0].x
-        yMax = k[0].y if k[0].y > yMax and not ySize else k[0].y
-        zMax = k[0].z if k[0].z > zMax and not zSize else k[0].z
+        xSize = k[0].x if k[0].x > xSize  else xSize
+        ySize = k[0].y if k[0].y > ySize  else ySize
+        zSize = k[0].z if k[0].z > zSize  else zSize
     for k in arange(0.1,xSize,step):
         for l in arange(0.1,ySize,step):
             for m in arange(0.1,zSize,step):
@@ -295,3 +295,4 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
                     minDist = d
                     minLoc = Location(round(k,2),round(l,2),round(m,2))
     return (minLoc, minDist)
+    
