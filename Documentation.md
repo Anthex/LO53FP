@@ -1,12 +1,10 @@
-
-
 ## CLASSES
 
  1. Cell  
- 2.  Location 
- 3.   MarkovModel 
- 4.   MarkovValue  
- 5.  RSSVector
+ 2. Location
+ 3. MarkovModel
+ 4. MarkovValue  
+ 5. RSSVector
 
     class Cell
      |  Methods defined here:
