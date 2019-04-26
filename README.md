@@ -15,4 +15,6 @@ This program aims to compute the approximate location of a mobile terminal for a
 ## Annex : N-Lateration 3D visualisation
 visuals.py provides a cool function to graphically represent the N-Lateration distances in a 3D space by creating an animated gif (RMI style)
 ### Example
-[Click here to view output gif example](https://dantz.fr/LO53/out.gif?) (too big to be displayed)
+[Click here to view output gif example](https://dantz.fr/LO53/out_rgb.gif?) (too big to be displayed)
+
+[Or here for the shades of grey version](https://dantz.fr/LO53/out.gif?)

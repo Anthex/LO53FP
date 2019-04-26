@@ -6,9 +6,10 @@ dataset = [(Location(.5,.5,.5), 3.0), (Location(4.0,.0,.0), 2.0), (Location(4.0,
 NLat_result = NLateration(dataset)
 W,H = NLat_result[3], NLat_result[4]
 frames = []
+dummy = [0 for _ in range(len(NLat_result[5][0]))]
 
 def createFrame(x,y,nbr):
-    img = Image.new("L",(x,y))
+    img = Image.new("HSV",(x,y))
     img.putdata(NLat_result[5][nbr])
     return img
 
@@ -22,4 +23,3 @@ def exportGif():
 
     frames[0].save("out.gif", format="GIF", append_images=frames[1:], save_all=True, duration=100, loop=0)
     print("gif exported")
-
