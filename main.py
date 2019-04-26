@@ -1,8 +1,11 @@
-from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel
+from structure import RSSVector, Location, Cell, newCell, KNeighbors, resolve_barycenter, MarkovModel, NLateration
 from random import random
 from math import floor
 
 Tf = [] #cells table
+
+#dataset : list of tuples representing emitters (Location, distance)
+dataset = [(Location(.5,.5,.5), 3.0), (Location(4.0,.0,.0), 2.0), (Location(4.0,5.0,5.0), 4.2), (Location(3.0,3.0,3.0), 2.5)]
 
 testSample = RSSVector(-26, -42, -13, -46)
 
@@ -12,16 +15,22 @@ Tf = [[newCell(-38,-27,-54,-13,2,2),newCell(-74,-62,-48,-33,2,6),newCell(-13,-28
       [newCell(-17,-50,-44,-33,10,2), newCell(-27,-28,-32,-45,10,6), newCell(-30,-20,-60,-40,10,10)]]
 
 def main():
+        #### N-Lateration ####
+        NLat_result = NLateration(dataset)
+        print("\r\nN-Lateration :\nComputed location : " + NLat_result[0].toString())
+        print("With distance = " + str(round(NLat_result[1], 2)) + " m")
+
         #### K neighbours ####
-        print("\nk neighbors of test sample : ")
+        print("\nK-neighbors of test sample : ")
         neighborsCells = KNeighbors(Tf, testSample)
         for k in neighborsCells:
                 print("(", k.location.x, ";", k.location.y, ")")
 
         #### Distances ####
-        print ("\ndistances : " + str(testSample.distances))
+        print ("\nDistances : " + str(testSample.distances))
 
         #### Barycenter ####
+        print("\r\nWeighted barycenter :")
         a = resolve_barycenter(neighborsCells, testSample.distances)
         print(a.toString())
 

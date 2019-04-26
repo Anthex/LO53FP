@@ -1,6 +1,6 @@
 from operator import itemgetter as ig
-from math import floor
-
+from math import floor, sqrt
+from numpy import arange
 class RSSVector():
     distances = []
     def __init__(self, n1, n2, n3, n4):
@@ -20,7 +20,7 @@ class RSSVector():
         and  v2.n3 == self.n3 and  v2.n4 == self.n4 else False
         
 class Location():
-    def __init__(self, x, y, z=0):
+    def __init__(self, x=0, y=0, z=0):
         self.x = x
         self.y = y
         self.z = z
@@ -28,7 +28,6 @@ class Location():
     def __eq__(self, loc2):
         return bool(self.x == loc2.x and self.y == loc2.y and self.z == loc2.z)
         
-
     def __mul__(self, multiplier):
         returnValue = Location(self.x, self.y, self.z)
         returnValue.x *= multiplier 
@@ -58,6 +57,9 @@ class Location():
 
     def toString(self):
         return "(" + str(self.x) + " ; " + str(self.y) + " ; " + str(self.z) + ")"
+
+    def distanceTo(self, loc):
+        return sqrt(pow(self.x - loc.x, 2) + pow(self.y - loc.y, 2) + pow(self.z - loc.z,2))
 
     def getPositionInArray(self, arraySize=3):
         '''
@@ -265,4 +267,31 @@ def resolve_barycenter(nC, d):
         + 1 / (1+d[1]/d[0]+d[1]/d[2]+d[1]/d[3])*nC[1].location \
         + 1 / (1+d[2]/d[1]+d[2]/d[0]+d[2]/d[3])*nC[2].location \
         + 1 / (1+d[3]/d[1]+d[3]/d[2]+d[3]/d[0])*nC[3].location 
-     
+
+
+def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
+    '''
+    Returns a tuple containing (Computed Location, Total distance)
+    :param data: Array of tuples containing (Location, distance) of known emitters
+    :param step: Increment of grid search (lower step => better precision => slower computation)
+    :param xSize: The X dimension of the cuboid containing all the emitters (automatically computed if not specified)
+    :param ySize: The Y dimension of the cuboid containing all the emitters (automatically computed if not specified)
+    :param zSize: The Z dimension of the cuboid containing all the emitters (automatically computed if not specified)
+    '''
+    minLoc = Location()
+    minDist = xMax = yMax = zMax = 0.0
+    for k in data:
+        minDist += abs(k[0].distanceTo(Location()) - k[1])
+        xMax = k[0].x if k[0].x > xMax and not xSize else k[0].x
+        yMax = k[0].y if k[0].y > yMax and not ySize else k[0].y
+        zMax = k[0].z if k[0].z > zMax and not zSize else k[0].z
+    for k in arange(0.1,xSize,step):
+        for l in arange(0.1,ySize,step):
+            for m in arange(0.1,zSize,step):
+                d = .0
+                for n in data:
+                    d += abs(n[0].distanceTo(Location(k,l,m)) - n[1])
+                if d < minDist:
+                    minDist = d
+                    minLoc = Location(round(k,2),round(l,2),round(m,2))
+    return (minLoc, minDist)
