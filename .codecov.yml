@@ -1,7 +1,2 @@
 ignore:
   - "main.py"
-
-status:
-  project:
-    default:
-      target:90%
