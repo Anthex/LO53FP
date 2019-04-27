@@ -8,4 +8,4 @@ def test_createFrame():
 
 def test_exportGif():
     exportGif()
-    assert os.path.exists("./out.gif")
+    assert os.path.exists(os.getcwd()+"/out.webp")
