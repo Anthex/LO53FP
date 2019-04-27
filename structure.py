@@ -281,13 +281,14 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
     '''
     minLoc = Location()
     minDist = 0.0
+    revStep = ceil(1/step)
     #gifArray = []
     for k in data:
         minDist += abs(k[0].distanceTo(Location()) - k[1])
         xSize = k[0].x if k[0].x > xSize  else xSize
         ySize = k[0].y if k[0].y > ySize  else ySize
         zSize = k[0].z if k[0].z > zSize  else zSize
-    imageArray=[[] for i in range(0,floor(zSize*10))]
+    imageArray=[[] for i in range(0,floor(zSize*revStep))]
     for k in arange(0,xSize,step):
         for l in arange(0,ySize,step):
             for m in arange(0,zSize,step):
@@ -298,5 +299,5 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
                     minDist = d
                     minLoc = Location(round(k,2),round(l,2),round(m,2))
                 d = (max(1-d/10.0, 0))**2
-                imageArray[floor(l*10)].append((250-floor(360-d*360), 255, floor(50+d*200)))
-    return (minLoc, minDist, imageArray[0], floor(ySize/step), floor(xSize/step), imageArray)
+                imageArray[floor(m*revStep)].append((265-floor(360-d*360), 255, floor(50+d*200)))
+    return (minLoc, minDist, imageArray[0], floor(xSize*revStep), floor(ySize*revStep), imageArray)
