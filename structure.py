@@ -1,5 +1,5 @@
 from operator import itemgetter as ig
-from math import floor, sqrt, ceil, exp
+from math import floor, sqrt, ceil
 from numpy import arange
 class RSSVector():
     distances = []
@@ -269,7 +269,7 @@ def resolve_barycenter(nC, d):
         + 1 / (1+d[3]/d[1]+d[3]/d[2]+d[3]/d[0])*nC[3].location
 
 
-def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
+def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0, md=.0, dmax=10):
     '''
     Returns a tuple containing (Computed Location, Total distance)
     :param data: Array of tuples containing (Location, distance) of known emitters
@@ -281,8 +281,8 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
     '''
     minLoc = Location()
     minDist = 0.0
+    maxDist= .0
     revStep = ceil(1/step)
-    #gifArray = []
     for k in data:
         minDist += abs(k[0].distanceTo(Location()) - k[1])
         xSize = k[0].x if k[0].x > xSize  else xSize
@@ -298,6 +298,17 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0):
                 if d < minDist:
                     minDist = d
                     minLoc = Location(round(k,2),round(l,2),round(m,2))
-                d = (max(1-d/10.0, 0))**2
-                imageArray[floor(m*revStep)].append((265-floor(d*360), 255, floor(50+d*200)))
-    return (minLoc, minDist, imageArray[0], floor(xSize*revStep), floor(ySize*revStep), imageArray)
+                if d > maxDist:
+                    maxDist = d
+
+                pd=d
+                d = (max(1-d/dmax, 0))
+                
+                if pd > md:
+                    imageArray[floor(m*revStep)].append((260-floor(360-d*360), 200, floor(50+d*200)))
+                else: #mark the computed location with a while pixel
+                    imageArray[floor(m*revStep)].append((100, 0, 255))
+            #print(minDist,pd)
+
+                
+    return (minLoc, minDist, imageArray[0], floor(xSize*revStep), floor(ySize*revStep), imageArray, maxDist)
