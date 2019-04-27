@@ -2,7 +2,7 @@ from structure import NLateration, Location
 from math import floor, sqrt
 from PIL import Image, ImageDraw
 
-global_step=.05
+global_step=.1
 dataset = [(Location(.5,.5,.5), 3.0), (Location(4.0,.0,.0), 2.0), (Location(4.0,5.0,5.0), 4.2)]
 NLat_result = NLateration(dataset, step=global_step)
 W,H = NLat_result[3], NLat_result[4]
