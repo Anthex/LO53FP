@@ -1,6 +1,8 @@
 from operator import itemgetter as ig
 from math import floor, sqrt, ceil
 from numpy import arange
+import sys 
+
 class RSSVector():
     distances = []
     def __init__(self, n1, n2, n3, n4):
@@ -290,6 +292,8 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0, md=.0, dmax=10):
         zSize = k[0].z if k[0].z > zSize  else zSize
     imageArray=[[] for i in range(0,floor(zSize*revStep))]
     for k in arange(0,xSize,step):
+        print(".",end="")
+        sys.stdout.flush()
         for l in arange(0,ySize,step):
             for m in arange(0,zSize,step):
                 d = .0
@@ -302,10 +306,10 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0, md=.0, dmax=10):
                     maxDist = d
 
                 pd=d
-                d = (max(1-d/dmax, 0))
+                d = (max(1-d/dmax, 0))**(2/3)
                 
                 if pd > md:
-                    imageArray[floor(m*revStep)].append((260-floor(360-d*360), 200, floor(50+d*200)))
+                    imageArray[floor(m*revStep)].append((260-floor(360-d*360), 200, floor(200+d*50)))
                 else: #mark the computed location with a while pixel
                     imageArray[floor(m*revStep)].append((100, 0, 255))
             #print(minDist,pd)
