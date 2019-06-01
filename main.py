@@ -1,6 +1,7 @@
-from structure import RSSVector, Location, newCell, KNeighbors, resolve_barycenter, MarkovModel, NLateration
+from structure import output, printf, RSSVector, Location, newCell, KNeighbors, resolve_barycenter, MarkovModel, NLateration
 from random import random
 from math import floor
+
 
 Tf = [] #cells table
 
@@ -14,25 +15,26 @@ Tf = [[newCell(-38,-27,-54,-13,2,2),newCell(-74,-62,-48,-33,2,6),newCell(-13,-28
       [newCell(-34,-27,-38,-41,6,2), newCell(-64,-48,-72,-35,6,6), newCell(-45,-37,-20,-15,6,10)], \
       [newCell(-17,-50,-44,-33,10,2), newCell(-27,-28,-32,-45,10,6), newCell(-30,-20,-60,-40,10,10)]]
 
+
 def main():
         #### N-Lateration ####
-        NLat_result = NLateration(dataset)
-        print("\r\nN-Lateration :\nComputed location : " + NLat_result[0].toString())
-        print("With distance = " + str(round(NLat_result[1], 2)) + " m")
+        NLat_result = NLateration(dataset, step=1)
+        printf("\r\nN-Lateration :\nComputed location : " + NLat_result[0].toString())
+        printf("With distance = " + str(round(NLat_result[1], 2)) + " m")
 
         #### K neighbours ####
-        print("\nK-neighbors of test sample : ")
+        printf("\nK-neighbors of test sample : ")
         neighborsCells = KNeighbors(Tf, testSample)
         for k in neighborsCells:
-                print("(", k.location.x, ";", k.location.y, ")")
+                printf("(", k.location.x, ";", k.location.y, ")")
 
         #### Distances ####
         print ("\nDistances : " + str(testSample.distances))
 
         #### Barycenter ####
-        print("\r\nWeighted barycenter :")
+        printf("\r\nWeighted barycenter :")
         a = resolve_barycenter(neighborsCells, testSample.distances)
-        print(a.toString())
+        printf(a.toString())
 
         #### Markov ####
         MM = MarkovModel(Tf)
@@ -44,27 +46,25 @@ def main():
         for k in range(0,100):
                 MM.moveToCellID(floor(random()*9+1))
 
-        print("\r\n")
+        printf("\r\n")
         MM.printValues()
-        print("\r\nPERCENTAGES : \r\n")
+        printf("\r\nPERCENTAGES : \r\n")
         MM.printPercentages()
 
-        print("\r\ncurrent cell is \033[1;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
+        printf("\r\ncurrent cell is {output.GREEN}" + str(MM.previousCell) + "{output.NORMAL} , most likely next cell is {output.GREEN}" + str(MM.getMostLikely()) + "{output.NORMAL} which is located at {output.GREEN}" + str(Location.fromID(MM.getMostLikely()).toString()) + "{output.NORMAL}")
 
         while(1):
-                print("Input next location ID (between 1 and 9)\r\n>>", end='')
+                printf("Input next location ID (between 1 and 9)\r\n>>", end='')
                 in_char = int(input())
-                print(chr(27)+'[2j')
-                print('\033c')
-                print('\x1bc')
+                printf(output.CLEAR)
                 if in_char > 0 and in_char < 10:
                         MM.moveToCellID(in_char)
                         MM.printValues()
-                        print("\r\nPERCENTAGES : \r\n")
+                        printf("\r\nPERCENTAGES : \r\n")
                         MM.printPercentages()
-                        print("\r\ncurrent cell is \033[0;32;40m#" + str(MM.previousCell) + "\033[1;37;40m , most likely next cell is \033[1;32;40m#" + str(MM.getMostLikely()) + "\033[1;37;40m which is located at \033[1;32;40m" + str(Location.fromID(MM.getMostLikely()).toString()) + "\033[1;37;40m")
+                        printf("\r\ncurrent cell is {output.GREEN}#" + str(MM.previousCell) + "{output.NORMAL} , most likely next cell is {output.GREEN}" + str(MM.getMostLikely()) + "{output.NORMAL} which is located at {output.GREEN}" + str(Location.fromID(MM.getMostLikely()).toString()) + "{output.NORMAL}")
                 else:
-                        print("invalid ID")
+                        printf("invalid ID")
                         break
 
 if __name__ == '__main__':

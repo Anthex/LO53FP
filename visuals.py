@@ -48,7 +48,7 @@ def exportGif(includeReverse=False):
         
     print(str(round(1000*(time.time()-start),2))+"ms","saving gif/video",)
     #frames[0].save("out.gif", format="GIF", append_images=frames[1:], save_all=True, duration=20, loop=0)
-    frames[0].save("../../chat/out.webp", format="WebP", append_images=frames[1:], save_all=True, duration=40, lossless=True)
+    frames[0].save("out.webp", format="WebP", append_images=frames[1:], save_all=True, duration=40, lossless=True)
     print(str(round(1000*(time.time()-start),2))+"ms","gif exported")
 
 start = time.time()

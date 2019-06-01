@@ -3,6 +3,19 @@ from math import floor, sqrt, ceil
 from numpy import arange
 import sys 
 
+#Terminal output formatters
+class output:
+    NORMAL = '\033[1;37;40m'
+    RED = '\033[0;31;40m'
+    GREEN = '\033[1;32;40m'
+    HIGHLIGHTED = '\033[03;30;47m'
+    CLEAR = chr(27)+'[2j\033c\x1bc'
+                
+def printf(*argv, end='\n'):
+        for arg in argv:
+                print(str(arg).format(output=output), end='')
+        print(end, end='')
+
 class RSSVector():
     distances = []
     def __init__(self, n1, n2, n3, n4):
@@ -152,43 +165,43 @@ class MarkovModel():
         '''
         Prints the counters of the Markov Model in a human-readable table form
         '''
-        print("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
-        print("---------------------------------------------------------------------------------", end='')
+        printf("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
+        printf("---------------------------------------------------------------------------------", end='')
         
         for i in range (0, 11):
-            print("\r\n", end='')
+            printf("\r\n", end='')
             if i == 10 or i == 1:
-                print("---------------------------------------------------------------------------------\r\n",end='')
+                printf("---------------------------------------------------------------------------------\r\n",end='')
             
-            print(i, end='\t')
+            printf(i, end='\t')
             for k in range (0,10):
                 if not self.MarkovValues[i][k].nb:
-                    print("\033[0;31;40m", end='')
+                    printf("{output.RED}", end='')
                 else:
-                    print("\033[0;32;40m", end='')
-                print(self.MarkovValues[i][k].nb, end='\t')
-                print("\033[1;37;40m", end='')
-        print("")
+                    printf("{output.GREEN}", end='')
+                printf(self.MarkovValues[i][k].nb, end='\t')
+                printf("{output.NORMAL}", end='')
+        printf("")
 
     def printPercentages(self):
         '''
         Prints the percentages of the Markov Model in a human-readable table form
         '''
-        print("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
-        print("---------------------------------------------------------------------------------", end='')
+        printf("\t? \t1 \t2 \t3\t4 \t5 \t6 \t7 \t8 \t9")
+        printf("---------------------------------------------------------------------------------", end='')
     
         for i in range (1, 10):
-            print("\r\n", i, end='\t')
+            printf("\r\n", i, end='\t')
             for k in range (0,10):
                 if not self.MarkovValues[i][k].percentage:
-                    print("\033[0;31;40m", end='')
+                    printf("{output.RED}", end='')
                 elif k != self.previousCell or self.getMostLikely() != i:
-                    print("\033[0;32;40m", end='')
+                    printf("{output.GREEN}", end='')
                 else:
-                    print("\033[4;30;47m", end='')
-                print(str(floor(self.MarkovValues[i][k].percentage * 100)), end='%')
-                print("\033[1;37;40m\t", end='')
-        print("")
+                    printf("{output.HIGHLIGHTED}", end='')
+                printf(str(floor(self.MarkovValues[i][k].percentage * 100)), end='%')
+                printf("{output.NORMAL}\t", end='')
+        printf("")
 
     def getMostLikely(self):
         '''
@@ -292,7 +305,7 @@ def NLateration(data, step=.1, xSize=0.0, ySize=0.0, zSize=0.0, md=.0, dmax=10):
         zSize = k[0].z if k[0].z > zSize  else zSize
     imageArray=[[] for i in range(0,floor(zSize*revStep))]
     for k in arange(0,xSize,step):
-        print(".",end="")
+        printf(".",end="")
         sys.stdout.flush()
         for l in arange(0,ySize,step):
             for m in arange(0,zSize,step):
